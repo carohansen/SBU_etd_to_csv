@@ -26,7 +26,7 @@ for file in glob.glob('*.xml'):
 	for item in root.iter('DISS_content'):
 		filename= item.find('DISS_binary').text
 
-	combined_committee_members = ""
+	combined_committee_members= ""
 
 	for item in root.iter('DISS_cmte_member'):
 	    comtesurname= item.find('DISS_name/DISS_surname').text
@@ -36,20 +36,20 @@ for file in glob.glob('*.xml'):
 
 	for item in root.iter('DISS_description'):
 		title= item.find('DISS_title').text
-		dept = item.find('DISS_institution/DISS_inst_contact').text
-		keywords = item.find('DISS_categorization/DISS_keyword').text
-		pages = item.get('page_count') + " pages"
+		dept= item.find('DISS_institution/DISS_inst_contact').text
+		keywords= item.find('DISS_categorization/DISS_keyword').text
+		pages= item.get('page_count') + " pages"
 
-	combined_abstracts = ""
+	combined_abstracts= ""
 
 	for item in root.iter("DISS_para"):
 	    combined_abstracts += re.sub('\t', '', item.text)
 
 	for item in root.iter('DISS_submission'):
-		embargocode = item.get('embargo_code')
+		embargocode= item.get('embargo_code')
 
 	forCSV.append([authorname, title, dept, keywords, pages, combined_abstracts, advisorname, combined_committee_members, embargocode, filename])
 
 	with open('outputFile.csv', 'w', newline='') as csvfile:
-		wr = csv.writer(csvfile, delimiter=',')
+		wr= csv.writer(csvfile, delimiter=',')
 		wr.writerows(forCSV)
